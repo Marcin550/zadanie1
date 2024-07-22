@@ -34,7 +34,7 @@ class RepositoriesController(@Autowired val repositoriesService: RepositoriesSer
     }
 
     @GetMapping("/saved")
-    fun getSaved(): List<RepositoryEntity> {
+    fun getSaved(): RepositoryEntityList {
         return repositoriesService.getSavedRepositories()
     }
 

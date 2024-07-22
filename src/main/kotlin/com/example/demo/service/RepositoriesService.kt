@@ -10,5 +10,5 @@ interface RepositoriesService {
     fun saveRepositoryById(id:Int): RepositoryEntity
     fun deleteSavedRepositoryById(id:Int): RepositoryEntity
     fun deleteAllSavedRepositories()
-    fun getSavedRepositories(): List<RepositoryEntity>
+    fun getSavedRepositories(): RepositoryEntityList
 }

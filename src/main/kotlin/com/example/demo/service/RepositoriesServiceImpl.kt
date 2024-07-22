@@ -54,8 +54,8 @@ class RepositoriesServiceImpl(@Autowired val repositoriesRepository: Repositorie
         savedRepositories.clear()
     }
 
-    override fun getSavedRepositories(): List<RepositoryEntity> {
-        return savedRepositories.values.toList()
+    override fun getSavedRepositories(): RepositoryEntityList {
+        return RepositoryEntityList(savedRepositories.size, savedRepositories.values.toList())
     }
 
 }
