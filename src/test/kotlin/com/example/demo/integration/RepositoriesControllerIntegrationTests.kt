@@ -8,6 +8,8 @@ import com.example.demo.integration.ControllerIntegrationTestsConstants.LANGUAGE
 import com.example.demo.integration.ControllerIntegrationTestsConstants.LANGUAGE_VALUE
 import com.example.demo.integration.ControllerIntegrationTestsConstants.REPOSITORIES_PATH
 import com.example.demo.integration.ControllerIntegrationTestsConstants.REPOSITORIES_PATH_ID
+import com.example.demo.integration.ControllerIntegrationTestsConstants.REPOSITORIES_PATH_ID_SAVE
+import com.example.demo.integration.ControllerIntegrationTestsConstants.REPOSITORIES_PATH_SAVED
 import com.example.demo.integration.ControllerIntegrationTestsConstants.REPOSITORIES_SEARCH_PATH
 import com.example.demo.integration.ControllerIntegrationTestsConstants.SIZE_PARAM
 import com.example.demo.integration.ControllerIntegrationTestsConstants.SIZE_VALUE
@@ -69,7 +71,7 @@ class RepositoriesControllerIntegrationTests(
     }
 
     @Test
-    fun shouldReturnTestRepository() {
+    fun shouldReturnRepository() {
         Given {
             port(port)
             pathParam(ID_PARAM, TEST_REPOSITORY_ID)
@@ -81,4 +83,58 @@ class RepositoriesControllerIntegrationTests(
         }
     }
 
+    @Test
+    fun shouldSaveRepository() {
+        Given {
+            port(port)
+            pathParam(ID_PARAM, TEST_REPOSITORY_ID)
+        } When {
+            put(REPOSITORIES_PATH_ID_SAVE)
+        }Then {
+            statusCode(HttpStatus.OK.value())
+            body(ID_PARAM, equalTo(TEST_REPOSITORY_ID))
+        }
+
+        Given {
+            port(port)
+        } When {
+            get(REPOSITORIES_PATH_SAVED)
+        }Then {
+            statusCode(HttpStatus.OK.value())
+            body("items[0].id", equalTo(TEST_REPOSITORY_ID))
+            body("total_count", equalTo(1))
+
+        }
+    }
+
+    @Test
+    fun shouldRemoveSavedRepository() {
+        Given {
+            port(port)
+            pathParam(ID_PARAM, TEST_REPOSITORY_ID)
+        } When {
+            put(REPOSITORIES_PATH_ID_SAVE)
+        }Then {
+            statusCode(HttpStatus.OK.value())
+            body(ID_PARAM, equalTo(TEST_REPOSITORY_ID))
+        }
+
+        Given {
+            port(port)
+        } When {
+            delete(REPOSITORIES_PATH_SAVED)
+        }Then {
+            statusCode(HttpStatus.OK.value())
+        }
+
+        Given {
+            port(port)
+        } When {
+            get(REPOSITORIES_PATH_SAVED)
+        }Then {
+            statusCode(HttpStatus.OK.value())
+            body("total_count", equalTo(0))
+
+        }
+    }
 }

@@ -6,7 +6,7 @@ import com.example.demo.service.RepositoriesService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
-@RestController()
+@RestController
 @RequestMapping("repositories")
 class RepositoriesController(@Autowired val repositoriesService: RepositoriesService) {
 
@@ -42,7 +42,7 @@ class RepositoriesController(@Autowired val repositoriesService: RepositoriesSer
     fun deleteSaved(@PathVariable id: Int): RepositoryEntity {
         return repositoriesService.deleteSavedRepositoryById(id)
     }
-    @DeleteMapping("/")
+    @DeleteMapping("/saved")
     fun deleteAllSaved(): Boolean {
         repositoriesService.deleteAllSavedRepositories()
         return true

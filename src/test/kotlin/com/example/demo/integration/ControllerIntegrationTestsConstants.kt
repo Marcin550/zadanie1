@@ -12,6 +12,8 @@ object ControllerIntegrationTestsConstants {
     const val REPOSITORIES_SEARCH_PATH = "$REPOSITORIES_PATH/search"
     const val REPOSITORIES_PATH_ID = "$REPOSITORIES_PATH/{id}"
     const val REPOSITORIES_PATH_ID_SAVE = "$REPOSITORIES_PATH_ID/save"
+    const val REPOSITORIES_PATH_SAVED = "$REPOSITORIES_PATH/saved"
+
 
     const val DATE_VALUE = "2019-01-10"
     const val SIZE_VALUE = 2
