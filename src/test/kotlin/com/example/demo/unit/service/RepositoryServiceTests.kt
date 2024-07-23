@@ -15,13 +15,18 @@ import com.example.demo.unit.service.RepositoryServiceTestsConstants.SECOND_LANG
 import com.example.demo.unit.service.RepositoryServiceTestsConstants.SECOND_REPOSITORY_ID
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.InjectMocks
+import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.junit.jupiter.MockitoExtension
 import kotlin.test.assertEquals
 import org.mockito.kotlin.any
 
+@ExtendWith(MockitoExtension::class)
 class RepositoryServiceTests {
-	private val repositoriesRepository: RepositoriesRepository = Mockito.mock(RepositoriesRepository::class.java)
-	private val repositoryService = RepositoriesServiceImpl(repositoriesRepository)
+	@Mock private lateinit var repositoriesRepository: RepositoriesRepository
+	@InjectMocks lateinit var repositoryService: RepositoriesServiceImpl
 
 	@Test
 	fun shouldReturnRepositories() {
