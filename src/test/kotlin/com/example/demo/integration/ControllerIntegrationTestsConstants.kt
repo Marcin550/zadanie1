@@ -19,7 +19,6 @@ object ControllerIntegrationTestsConstants {
     const val SIZE_VALUE = 2
     const val LANGUAGE_VALUE = "Java"
 
-    const val INCORRECT_LANGUAGE_VALUE = "Javaj"
     const val DEFAULT_SIZE_VALUE = 10
 
 }

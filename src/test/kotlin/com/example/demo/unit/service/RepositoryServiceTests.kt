@@ -2,7 +2,7 @@ package com.example.demo.unit.service
 
 import com.example.demo.Entity.RepositoryEntity
 import com.example.demo.Entity.RepositoryEntityList
-import com.example.demo.exception.WrongDateFormatException
+import com.example.demo.exception.IncorrectDateFormatException
 import com.example.demo.repository.RepositoriesRepository
 import com.example.demo.service.RepositoriesServiceImpl
 import com.example.demo.unit.service.RepositoryServiceTestsConstants.DATE_VALUE
@@ -45,9 +45,9 @@ class RepositoryServiceTests {
 
 	@Test
 	fun shouldTrowWrongDateFormatException() {
- 		assertThrows(WrongDateFormatException::class.java)
+ 		assertThrows(IncorrectDateFormatException::class.java)
 		{ repositoryService.searchRepositories(INCORRECT_DATE_VALUE, 10) }
-		assertThrows(WrongDateFormatException::class.java)
+		assertThrows(IncorrectDateFormatException::class.java)
 		{ repositoryService.searchRepositories(INCORRECT_DATE_VALUE, 10, FIRST_LANGUAGE_VALUE) }
 
 	}

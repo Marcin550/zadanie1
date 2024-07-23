@@ -3,7 +3,7 @@ package com.example.demo.service
 import com.example.demo.Entity.RepositoryEntity
 import com.example.demo.Entity.RepositoryEntityList
 import com.example.demo.exception.RepositoryNotFoundException
-import com.example.demo.exception.WrongDateFormatException
+import com.example.demo.exception.IncorrectDateFormatException
 import com.example.demo.repository.RepositoriesRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -22,7 +22,7 @@ class RepositoriesServiceImpl(@Autowired val repositoriesRepository: Repositorie
             val formattedDate = LocalDate.parse(date, dateFormatter)
             return repositoriesRepository.searchRepositories(size, formattedDate)
         }catch (exception: DateTimeException){
-            throw WrongDateFormatException()
+            throw IncorrectDateFormatException()
         }
     }
 
@@ -31,7 +31,7 @@ class RepositoriesServiceImpl(@Autowired val repositoriesRepository: Repositorie
             val formattedDate = LocalDate.parse(date, dateFormatter)
             return repositoriesRepository.searchRepositories(size, formattedDate, language)
         }catch (exception: DateTimeException){
-            throw WrongDateFormatException()
+            throw IncorrectDateFormatException()
         }
     }
 

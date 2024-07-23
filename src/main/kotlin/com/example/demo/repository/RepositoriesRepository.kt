@@ -9,11 +9,13 @@ import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
 import java.time.LocalDate
 
+private const val BASE_URL = "https://api.github.com/"
+
 @Repository
 class RepositoriesRepository {
 
     private val webClient = WebClient.builder()
-        .baseUrl("https://api.github.com/")
+        .baseUrl(BASE_URL)
         .build()
 
     fun searchRepositories(size:Int, date: LocalDate, language:String): RepositoryEntityList {
@@ -24,6 +26,18 @@ class RepositoriesRepository {
     fun searchRepositories(size:Int, date: LocalDate): RepositoryEntityList {
         val query = getQuery(date)
         return searchByQuery(query, size)
+    }
+
+    fun getRepositoryById(id:Int): RepositoryEntity {
+        return webClient.get()
+            .uri { uriBuilder ->
+                uriBuilder.path("repositories/$id")
+                    .build()
+            }
+            .retrieve()
+            .onStatus(HttpStatusCode::isError) { Mono.error(RepositoryNotFoundException()) }
+            .toEntity(RepositoryEntity::class.java).block()?.body ?: throw RepositoryNotFoundException()
+
     }
 
     private fun searchByQuery(query: String, size: Int): RepositoryEntityList {
@@ -38,7 +52,7 @@ class RepositoriesRepository {
             .retrieve()
             .onStatus(HttpStatusCode::isError) { Mono.empty() }
             .toEntity(RepositoryEntityList::class.java)
-            .block()?.body!!
+            .block()?.body ?: RepositoryEntityList.empty()
     }
 
     private fun getQuery(date: LocalDate): String {
@@ -49,16 +63,5 @@ class RepositoriesRepository {
         return "created:>$date language:$language"
     }
 
-    fun getRepositoryById(id:Int): RepositoryEntity {
-        return webClient.get()
-            .uri { uriBuilder ->
-                uriBuilder.path("repositories/$id")
-                    .build()
-            }
-            .retrieve()
-            .onStatus(HttpStatusCode::isError) { Mono.error(RepositoryNotFoundException()) }
-            .toEntity(RepositoryEntity::class.java).block()?.body!!
-
-    }
 
 }
